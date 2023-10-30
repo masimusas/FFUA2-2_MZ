@@ -1,27 +1,22 @@
 import "./App.css";
-import RegistrationPage from "./pages/Registration/Registration";
+import Registration from "./pages/Registration/Registration";
+import Login from "./pages/Login/Login";
+import ClientRegistration from "./pages/ClientRegistration/ClientRegistration";
 import { Routes, Route } from "react-router-dom";
-import Button from "./components/Button/Button";
+import { Header } from "./components/Header/Header";
 
 const App = () => {
-  const handleButtonClick = () => {
-    // Čia galite įdėti veiksmus, kurie vykdomi paspaudus mygtuką.
-    console.log("Mygtukas paspaustas!");
-  };
+  // const handleButtonClick = () => {
+  //   console.log("Mygtukas paspaustas!");
+  // };
 
   return (
     <div>
-      <h1>Salono Puslapis</h1>
-      <Button type="button" onClick={handleButtonClick}>
-        Paspausk mane
-      </Button>
-      <br />
-      <Button type="link" linkTo="/registracija">
-        Eiti į registracijos puslapį
-      </Button>
-      {/* React Router maršrutavimas */}
+      <Header />
       <Routes>
-        <Route path="/registracija" element={<RegistrationPage />} />
+        <Route path="/registration" element={<Registration />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/clients" element={<ClientRegistration />} />
       </Routes>
     </div>
   );

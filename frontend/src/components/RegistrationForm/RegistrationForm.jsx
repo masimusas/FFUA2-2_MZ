@@ -1,4 +1,3 @@
-// RegistrationForm.js
 import React, { useState } from "react";
 
 const RegistrationForm = () => {
@@ -23,10 +22,23 @@ const RegistrationForm = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Čia turėtume įdėti kodą, kuris išsiųs registracijos duomenis į serverį.
-    // Axios dar nėra įdiegtas, bet galėtume pridėti vėliau.
+
+    try {
+      const response = await fetch(`http://localhost:5500/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, firstName, lastName, password }),
+      });
+
+      const data = await response.json();
+      console.log(data.message);
+    } catch (error) {
+      console.error("Registracijos klaida:", error.message);
+    }
   };
 
   return (
