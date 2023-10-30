@@ -1,30 +1,30 @@
 import React, { useState } from "react";
 
-const RegistrationForm = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [email, setEmail] = useState("");
-  const [registrationDate, setRegistrationDate] = useState("");
-  const [registrationTime, setRegistrationTime] = useState("");
+const ClientsForm = () => {
+  const [firstName, setClientsFirstName] = useState("");
+  const [lastName, setClientsLastName] = useState("");
+  const [email, setClientsEmail] = useState("");
+  const [clientsDate, setClientsDate] = useState("");
+  const [clientsTime, setClientsTime] = useState("");
 
-  const handleFirstNameChange = (e) => {
-    setFirstName(e.target.value);
+  const handleClientsFirstNameChange = (e) => {
+    setClientsFirstName(e.target.value);
   };
 
-  const handleLastNameChange = (e) => {
-    setLastName(e.target.value);
+  const handleClientsLastNameChange = (e) => {
+    setClientsLastName(e.target.value);
   };
 
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
+  const handleClientsEmailChange = (e) => {
+    setClientsEmail(e.target.value);
   };
 
-  const handleRegistrationDateChange = (e) => {
-    setRegistrationDate(e.target.value);
+  const handleClientsDateChange = (e) => {
+    setClientsDate(e.target.value);
   };
 
-  const handleRegistrationTimeChange = (e) => {
-    setRegistrationTime(e.target.value);
+  const handleClientsTimeChange = (e) => {
+    setClientsTime(e.target.value);
   };
 
   const handleSubmit = (e) => {
@@ -38,7 +38,7 @@ const RegistrationForm = () => {
         <input
           type="text"
           value={firstName}
-          onChange={handleFirstNameChange}
+          onChange={handleClientsFirstNameChange}
           required
         />
       </label>
@@ -48,7 +48,7 @@ const RegistrationForm = () => {
         <input
           type="text"
           value={lastName}
-          onChange={handleLastNameChange}
+          onChange={handleClientsLastNameChange}
           required
         />
       </label>
@@ -58,7 +58,7 @@ const RegistrationForm = () => {
         <input
           type="email"
           value={email}
-          onChange={handleEmailChange}
+          onChange={handleClientsEmailChange}
           required
         />
       </label>
@@ -67,8 +67,8 @@ const RegistrationForm = () => {
         Registracijos data:
         <input
           type="date"
-          value={registrationDate}
-          onChange={handleRegistrationDateChange}
+          value={clientsDate}
+          onChange={handleClientsDateChange}
           required
         />
       </label>
@@ -77,8 +77,8 @@ const RegistrationForm = () => {
         Registracijos laikas:
         <input
           type="time"
-          value={registrationTime}
-          onChange={handleRegistrationTimeChange}
+          value={clientsTime}
+          onChange={handleClientsTimeChange}
           required
         />
       </label>
@@ -88,4 +88,4 @@ const RegistrationForm = () => {
   );
 };
 
-export default RegistrationForm;
+export default ClientsForm;

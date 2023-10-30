@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,8 +14,24 @@ const LoginForm = () => {
     setPassword(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:5500/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await response.json();
+      console.log(data.message);
+      navigate("/clients");
+    } catch (error) {
+      console.error("Prisijungimo klaida:", error.message);
+    }
   };
 
   return (
