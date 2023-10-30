@@ -1,4 +1,3 @@
-// LoginForm.js
 import React, { useState } from "react";
 
 const LoginForm = () => {
@@ -15,8 +14,6 @@ const LoginForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Čia turėtume įdėti kodą, kuris išsiųs prisijungimo duomenis į serverį.
-    // Axios dar nėra įdiegtas, bet galėtume pridėti vėliau.
   };
 
   return (
