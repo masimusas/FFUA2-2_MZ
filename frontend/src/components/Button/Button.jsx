@@ -1,4 +1,6 @@
+// Button.jsx
 import React from "react";
+import "./Button.css";
 
 const Button = ({ type, onClick, children, linkTo }) => {
   const buttonProps = {

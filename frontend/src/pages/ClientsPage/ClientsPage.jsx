@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import ClienForm from "../../components/ClientForm/ClientForm";
 import Clients from "../../components/Clients/Clients";
 import Logout from "../../components/Logout/Logout";
+import "./ClientsPage.css";
 import Modal from "react-modal";
 
 const ClientsPage = () => {
@@ -47,17 +48,28 @@ const ClientsPage = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Salono Klientų Puslapis</h1>
       <Logout onLogout={handleLogout} />
-      <button onClick={openModal}>Registruoti klientą</button>
+      <button className="modal-button" onClick={openModal}>
+        Registruoti klientą
+      </button>
       <Clients />
       <Modal
         isOpen={isModalOpen}
         onRequestClose={closeModal}
         contentLabel="Klientų registracijos forma"
+        style={{
+          content: {
+            maxWidth: "500px",
+            maxHeight: "800px",
+            margin: "auto",
+          },
+        }}
       >
-        <button onClick={closeModal}>Uždaryti</button>
+        <button className="modal-close-button" onClick={closeModal}>
+          Uždaryti
+        </button>
         <ClienForm />
       </Modal>
     </div>

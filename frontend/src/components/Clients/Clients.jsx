@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./Clients.css";
 
 const ClientTable = () => {
   const [clients, setClients] = useState([]);
@@ -13,7 +14,7 @@ const ClientTable = () => {
   }, []);
 
   return (
-    <div>
+    <div className="clients-table">
       <h2>Klientų lentelė</h2>
       <table>
         <thead>

@@ -3,8 +3,8 @@ import RegistrationForm from "../../components/RegistrationForm/RegistrationForm
 
 const RegistrationPage = () => {
   return (
-    <div>
-      <h1>Salono Registracijos Puslapis</h1>
+    <div className="container">
+      <h1>Registracijos Puslapis</h1>
       <RegistrationForm />
     </div>
   );

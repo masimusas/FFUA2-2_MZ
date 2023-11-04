@@ -1,0 +1,33 @@
+.header-wrapper {
+    position: fixed;
+    top: 0;
+    background-color: none;
+    color: #fff;
+    padding: 10px;
+    z-index: 10;
+}
+
+.links-assistance-wrapper {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.navlinks {
+    justify-content: space-between;
+}
+
+.navlinks a:hover,
+button:hover {
+    color: #3498db;
+}
+
+button,
+.navlinks a {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
