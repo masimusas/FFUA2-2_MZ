@@ -1,22 +1,49 @@
 import React from "react";
 import Button from "../../components/Button/Button";
+import saloonImage from "../../assets/saloon.jpg";
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
 export const Home = () => {
+  const navigate = useNavigate();
+  const isAuthenticated = localStorage.getItem("token");
+
+  const handleRegistrationClick = () => {
+    navigate("./registracija");
+  };
+
+  const handleLoginClick = () => {
+    navigate("./login");
+  };
+
+  const handleClientsClick = () => {
+    navigate("/clients");
+  };
+
   return (
     <div className="home-container">
-      <img src="" alt="Beauty Salon" className="cover-image" />
-      <h1>La Bellezza Salonas</h1>
+      <h2>Kur stilius pasitinka ramybę</h2>
+      <img src={saloonImage} alt="Beauty Salon" className="cover-image" />
       <p>
-        Sveiki atvykę į La Bellezza grožio saloną! Mes įsipareigoję suteikti
-        jums neįtikėtiną grožio patirtį ir pasirūpinti jūsų išvaizda.
+        Sveiki atvykę į "Kur stilius pasitinka ramybę" grožio saloną! Mes
+        įsipareigoję suteikti jums neįtikėtiną grožio patirtį ir pasirūpinti
+        jūsų išvaizda.
       </p>
-      <Button type="link" linkTo="./registracija">
-        Eiti į registracijos puslapį
-      </Button>
-      <Button type="link" linkTo="./login">
-        Eiti į prisijungimo puslapį
-      </Button>
+      {!isAuthenticated && (
+        <>
+          <Button type="link" onClick={handleRegistrationClick}>
+            Eiti į registracijos puslapį
+          </Button>
+          <Button type="link" onClick={handleLoginClick}>
+            Eiti į prisijungimo puslapį
+          </Button>
+        </>
+      )}
+      {isAuthenticated && (
+        <Button type="link" onClick={handleClientsClick}>
+          Eiti į klientų puslapį
+        </Button>
+      )}
     </div>
   );
 };

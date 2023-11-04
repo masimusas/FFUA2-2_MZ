@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
+
 Modal.setAppElement("#root");
 const ClientsForm = () => {
   const [firstName, setClientsFirstName] = useState("");
@@ -94,7 +95,6 @@ const ClientsForm = () => {
           required
         />
       </label>
-      <br />
       <label>
         Pavardė:
         <input
@@ -104,7 +104,6 @@ const ClientsForm = () => {
           required
         />
       </label>
-      <br />
       <label>
         Elektroninis paštas:
         <input
@@ -114,7 +113,6 @@ const ClientsForm = () => {
           required
         />
       </label>
-      <br />
       <label>
         Registracijos data:
         <input
@@ -124,7 +122,6 @@ const ClientsForm = () => {
           required
         />
       </label>
-      <br />
       <label>
         Registracijos laikas:
         <input
@@ -134,7 +131,6 @@ const ClientsForm = () => {
           required
         />
       </label>
-      <br />
       <label>
         Trukmė iki (valandos:minutes):
         <input
@@ -144,7 +140,6 @@ const ClientsForm = () => {
           required
         />
       </label>
-      <br />
       <label>
         Pasirinkite procedūrą:
         <select value={procedure} onChange={handleProcedureChange}>
@@ -158,7 +153,6 @@ const ClientsForm = () => {
           ))}
         </select>
       </label>
-      <br />
       <button type="submit">Registruoti klientą</button>
     </form>
   );

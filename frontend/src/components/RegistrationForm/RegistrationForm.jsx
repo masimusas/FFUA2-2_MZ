@@ -52,7 +52,6 @@ const RegistrationForm = () => {
           required
         />
       </label>
-      <br />
       <label>
         Vardas:
         <input
@@ -62,7 +61,6 @@ const RegistrationForm = () => {
           required
         />
       </label>
-      <br />
       <label>
         Pavardė:
         <input
@@ -72,7 +70,6 @@ const RegistrationForm = () => {
           required
         />
       </label>
-      <br />
       <label>
         Slaptažodis:
         <input
@@ -82,7 +79,6 @@ const RegistrationForm = () => {
           required
         />
       </label>
-      <br />
       <button type="submit">Registruotis</button>
     </form>
   );
