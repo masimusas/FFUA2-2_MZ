@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-
+import React, { useState, useEffect } from "react";
+import Modal from "react-modal";
+Modal.setAppElement("#root");
 const ClientsForm = () => {
   const [firstName, setClientsFirstName] = useState("");
   const [lastName, setClientsLastName] = useState("");
   const [email, setClientsEmail] = useState("");
   const [clientsDate, setClientsDate] = useState("");
   const [clientsTime, setClientsTime] = useState("");
+  const [duration, setDuration] = useState("");
+  const [procedure, setProcedure] = useState("");
+  const [selectedProcedure, setSelectedProceduresList] = useState([]);
 
   const handleClientsFirstNameChange = (e) => {
     setClientsFirstName(e.target.value);
@@ -27,8 +31,56 @@ const ClientsForm = () => {
     setClientsTime(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleDurationChange = (e) => {
+    setDuration(e.target.value);
+  };
+
+  useEffect(() => {
+    fetch("http://localhost:5500/procedureslist")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Gauti procedūrų duomenys:", data);
+        setSelectedProceduresList(data);
+      })
+      .catch((error) => {
+        console.error("Klaida gaunant procedūras:", error.message);
+      });
+  }, []);
+
+  const handleProcedureChange = (e) => {
+    setProcedure(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      const response = await fetch("http://localhost:5500/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          firstName,
+          lastName,
+          email,
+          date: clientsDate,
+          time: clientsTime,
+          duration,
+          procedure,
+        }),
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data.message);
+      } else {
+        const errorData = await response.json();
+        console.error("Registracijos klaida:", errorData.error);
+      }
+    } catch (error) {
+      console.error("Registracijos klaida:", error.message);
+    }
   };
 
   return (
@@ -81,6 +133,30 @@ const ClientsForm = () => {
           onChange={handleClientsTimeChange}
           required
         />
+      </label>
+      <br />
+      <label>
+        Trukmė iki (valandos:minutes):
+        <input
+          type="time"
+          value={duration}
+          onChange={handleDurationChange}
+          required
+        />
+      </label>
+      <br />
+      <label>
+        Pasirinkite procedūrą:
+        <select value={procedure} onChange={handleProcedureChange}>
+          <option value="" disabled>
+            Pasirinkite procedūrą
+          </option>
+          {selectedProcedure.map((procedure) => (
+            <option key={procedure._id} value={procedure.procedureName}>
+              {procedure.procedureName}
+            </option>
+          ))}
+        </select>
       </label>
       <br />
       <button type="submit">Registruoti klientą</button>
