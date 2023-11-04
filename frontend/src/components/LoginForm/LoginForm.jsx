@@ -28,6 +28,11 @@ const LoginForm = () => {
 
       const data = await response.json();
       console.log(data.message);
+      console.log(data);
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+
       navigate("/clients");
     } catch (error) {
       console.error("Prisijungimo klaida:", error.message);
