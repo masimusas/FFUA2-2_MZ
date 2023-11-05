@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ClienForm from "../../components/ClientForm/ClientForm";
 import Clients from "../../components/Clients/Clients";
-import Logout from "../../components/Logout/Logout";
 import "./ClientsPage.css";
 import Modal from "react-modal";
 
@@ -35,10 +34,6 @@ const ClientsPage = () => {
     }
   }, [navigate]);
 
-  const handleLogout = () => {
-    window.location.reload();
-  };
-
   const openModal = () => {
     setIsModalOpen(true);
   };
@@ -50,7 +45,6 @@ const ClientsPage = () => {
   return (
     <div className="container">
       <h1>Salono Klientų Puslapis</h1>
-      <Logout onLogout={handleLogout} />
       <button className="modal-button" onClick={openModal}>
         Registruoti klientą
       </button>
@@ -62,7 +56,7 @@ const ClientsPage = () => {
         style={{
           content: {
             maxWidth: "500px",
-            maxHeight: "800px",
+            maxHeight: "fit-content",
             margin: "auto",
           },
         }}

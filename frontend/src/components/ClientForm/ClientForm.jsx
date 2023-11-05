@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import Modal from "react-modal";
+import "./ClientsForm.css";
 
-Modal.setAppElement("#root");
+// Funkcija, kuri sugeneruoja ir valdo klientų registracijos formą
 const ClientsForm = () => {
+  // Būsenos kintamieji, laikantys formos įvestų duomenų busenas
   const [firstName, setClientsFirstName] = useState("");
   const [lastName, setClientsLastName] = useState("");
   const [email, setClientsEmail] = useState("");
@@ -11,7 +12,9 @@ const ClientsForm = () => {
   const [duration, setDuration] = useState("");
   const [procedure, setProcedure] = useState("");
   const [selectedProcedure, setSelectedProceduresList] = useState([]);
+  const [message, setMessage] = useState(null);
 
+  // Funkcijos, skirtos kiekvienos formos lauko pakeitimui
   const handleClientsFirstNameChange = (e) => {
     setClientsFirstName(e.target.value);
   };
@@ -36,11 +39,11 @@ const ClientsForm = () => {
     setDuration(e.target.value);
   };
 
+  // Efektas, kuris gauna procedūrų sąrašą iš serverio
   useEffect(() => {
     fetch("http://localhost:5500/procedureslist")
       .then((response) => response.json())
       .then((data) => {
-        console.log("Gauti procedūrų duomenys:", data);
         setSelectedProceduresList(data);
       })
       .catch((error) => {
@@ -48,14 +51,17 @@ const ClientsForm = () => {
       });
   }, []);
 
+  // Funkcija, kuri keičia būseną, kai pasirinkta procedūra
   const handleProcedureChange = (e) => {
     setProcedure(e.target.value);
   };
 
+  // Funkcija, kuri apdoroja formos pateikimą
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
+      // Siunčiama registracijos užklausa į serverį
       const response = await fetch("http://localhost:5500/register", {
         method: "POST",
         headers: {
@@ -72,18 +78,23 @@ const ClientsForm = () => {
         }),
       });
 
+      // Tikrinama ar užklausa buvo sėkminga
       if (response.ok) {
         const data = await response.json();
-        console.log(data.message);
+        // Jei sėkminga, rodomas sėkmės pranešimas
+        setMessage({ type: "success", content: data.message });
       } else {
+        // Jei klaida, rodomas klaidos pranešimas
         const errorData = await response.json();
-        console.error("Registracijos klaida:", errorData.error);
+        setMessage({ type: "error", content: errorData.error });
       }
     } catch (error) {
-      console.error("Registracijos klaida:", error.message);
+      // Jei įvyko klaida, rodomas bendras klaidos pranešimas
+      setMessage({ type: "error", content: error.message });
     }
   };
 
+  // Grąžinamas formos JSX
   return (
     <form onSubmit={handleSubmit}>
       <label>
@@ -154,6 +165,9 @@ const ClientsForm = () => {
         </select>
       </label>
       <button type="submit">Registruoti klientą</button>
+      {message && (
+        <div className={`message ${message.type}`}>{message.content}</div>
+      )}
     </form>
   );
 };
