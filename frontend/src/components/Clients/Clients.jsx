@@ -28,7 +28,7 @@ const ClientTable = () => {
     setPageNumber(selected);
   };
 
-  // Grąžinama JSX, kuri atvaizduoja klientų lentelę ir puslapiai
+  // return, kuris grąžinama klientų registracijos lentelę
   return (
     <div className="clients-table">
       <h2>Klientų lentelė</h2>

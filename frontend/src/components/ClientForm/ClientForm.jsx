@@ -94,7 +94,7 @@ const ClientsForm = () => {
     }
   };
 
-  // Grąžinamas formos JSX
+  // return, kuris gražina klientų registracijos formą
   return (
     <form onSubmit={handleSubmit}>
       <label>

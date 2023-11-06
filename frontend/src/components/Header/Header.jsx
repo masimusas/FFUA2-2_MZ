@@ -14,7 +14,7 @@ export const Header = () => {
     navigate("/login");
   };
 
-  // JSX, kuris atvaizduoja puslapio antraštę su navigacijos nuorodomis
+  // return, kuris grąžina puslapio antraštę su navigacijos nuorodomis
   return (
     <div className="header-wrapper">
       <div className="links-assistance-wrapper">

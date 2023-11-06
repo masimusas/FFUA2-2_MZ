@@ -4,22 +4,28 @@ import saloonImage from "../../assets/saloon.jpg";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";
 
+// Pagrindinį puslapis
 export const Home = () => {
+  // useNavigate hook'as leidžia programiškai pereiti į kitą puslapį
   const navigate = useNavigate();
+  // Patikrinama ar vartotojas autentifikuotas
   const isAuthenticated = localStorage.getItem("token");
 
+  // Funkcija, kuri nukreipia į registracijos puslapį
   const handleRegistrationClick = () => {
     navigate("./registracija");
   };
 
+  // Funkcija, kuri nukreipia į prisijungimo puslapį
   const handleLoginClick = () => {
     navigate("./login");
   };
 
+  // Funkcija, kuri nukreipia į klientų puslapį
   const handleClientsClick = () => {
     navigate("/clients");
   };
-
+  // return, kuris grąžina pagrindinį puslapį
   return (
     <div className="home-container">
       <h2>Kur stilius pasitinka ramybę</h2>
@@ -39,7 +45,9 @@ export const Home = () => {
           </Button>
         </>
       )}
+      {/* Patikrinama ar vartotojas autentifikuotas */}
       {isAuthenticated && (
+        /* Mygtukas, kuris nukreipia į klientų puslapį */
         <Button type="link" onClick={handleClientsClick}>
           Eiti į klientų puslapį
         </Button>

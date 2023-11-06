@@ -6,7 +6,9 @@ import { Header } from "./components/Header/Header";
 import ClientsPage from "./pages/ClientsPage/ClientsPage";
 import { Home } from "./pages/Home/Home";
 
+// Pagrindinė aplikacijos Funkcija, kuri grąžina navigaciją ir puslapius
 const App = () => {
+  // return, kuris grąžina pagrindinį aplikacijos komponentą
   return (
     <div className="background">
       <Header />
