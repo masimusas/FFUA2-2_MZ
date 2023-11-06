@@ -1,3 +1,4 @@
+// Importuojame reikalingas bibliotekas ir modulius
 const express = require("express");
 const connectDB = require("./config/database");
 const bodyParser = require("body-parser");
@@ -5,9 +6,11 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const jwt = require("jsonwebtoken");
 
+// Sukuriame Express aplikaciją
 const app = express();
 const PORT = process.env.PORT || 5500;
 
+// Konfigūruojame CORS kuris leidžia bendrauti frontend su backend
 const corsOptions = {
   origin: "http://localhost:3000",
   methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
@@ -15,11 +18,15 @@ const corsOptions = {
   optionsSuccessStatus: 204,
 };
 app.use(cors(corsOptions));
+
+// Parsiunčiame JSON užklausas
 app.use(bodyParser.json());
 const JWT_EXPIRATION_TIME = "1h";
 const JWT_SECRET = Math.random().toString(36).substring(3);
+// Prisijungiame prie MongoDB duomenų bazės
 connectDB();
 
+// JWT autentifikacijos middleware
 const authenticateJWT = (req, res, next) => {
   const token = req.header("x-auth-token");
 
@@ -38,9 +45,12 @@ const authenticateJWT = (req, res, next) => {
   }
 };
 
+// Užklausos patikrinimas, ar JWT yra galiojantis
 app.post("/verify", authenticateJWT, (req, res) => {
   res.status(200).json({ message: "Tokenas yra galiojantis" });
 });
+
+// Sukuriame MongoDB modelius
 const Registration = mongoose.model("administratorsList", {
   email: String,
   firstName: String,
@@ -64,6 +74,7 @@ const ProceduresList = mongoose.model("ProceduresList", {
 
 // Routes
 
+// Gauname visus klientus
 app.get("/clients", async (req, res) => {
   try {
     const clients = await Client.find();
@@ -74,11 +85,13 @@ app.get("/clients", async (req, res) => {
   }
 });
 
+// Registruojame naują klientą
 app.post("/register", async (req, res) => {
   const { firstName, lastName, email, date, time, duration, procedure } =
     req.body;
 
   try {
+    // Tikriname, ar paslauga užimta tuo pačiu metu
     const existingServiceSameTime = await Client.findOne({
       date,
       $or: [
@@ -100,6 +113,7 @@ app.post("/register", async (req, res) => {
       });
     }
 
+    // Sukuriame naują kliento įrašą ir išsaugome jį
     const newClient = new Client({
       firstName,
       lastName,
@@ -119,10 +133,12 @@ app.post("/register", async (req, res) => {
   }
 });
 
+// Registruojame naują administratorių
 app.post("/registration", async (req, res) => {
   const { email, firstName, lastName, password } = req.body;
 
   try {
+    // Tikriname, ar vartotojas su tokiu el. paštu jau egzistuoja
     const existingUser = await Registration.findOne({ email });
 
     if (existingUser) {
@@ -131,6 +147,7 @@ app.post("/registration", async (req, res) => {
         .json({ error: "Vartotojas su šiuo el. paštu jau registruotas." });
     }
 
+    // Sukuriame naują registracijos įrašą ir išsaugome jį
     const registration = new Registration({
       email,
       firstName,
@@ -147,10 +164,12 @@ app.post("/registration", async (req, res) => {
   }
 });
 
+// Prisijungimo funkcija
 app.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   try {
+    // Tikriname, ar vartotojas su nurodytu el. paštu ir slaptažodžiu egzistuoja
     const existingUser = await Registration.findOne({ email, password });
 
     if (!existingUser) {
@@ -158,6 +177,7 @@ app.post("/login", async (req, res) => {
         .status(401)
         .json({ error: "Neteisingas el. paštas arba slaptažodis." });
     }
+    // Sukuriame JWT tokeną ir grąžiname jį kartu su sėkmingos prisijungimo žinute
     const token = jwt.sign(
       { userId: existingUser._id, email: existingUser.email },
       JWT_SECRET,
@@ -171,6 +191,7 @@ app.post("/login", async (req, res) => {
   }
 });
 
+// Gauname visų procedūrų sąrašą
 app.get("/procedureslist", async (req, res) => {
   try {
     const proceduresList = await ProceduresList.find();
@@ -180,7 +201,33 @@ app.get("/procedureslist", async (req, res) => {
     res.status(500).json({ error: "Serverio klaida" });
   }
 });
+// Įrašų trinimo funkcija
+app.delete("/delete/:clientId", authenticateJWT, async (req, res) => {
+  const registrationId = req.params.clientId;
 
+  try {
+    // Tikriname, ar įrašas su nurodytu ID egzistuoja
+    const existingClient = await Client.findById(registrationId);
+
+    if (!existingClient) {
+      return res.status(404).json({ error: "Registracijos įrašas nerastas" });
+    }
+
+    // Įrašas egzistuoja, todėl jį ištriname
+    await existingClient.deleteOne();
+
+    // Grąžiname sėkmingos ištrynimo žinutę
+    res
+      .status(200)
+      .json({ message: "Registracijos įrašas ištrintas sėkmingai" });
+  } catch (error) {
+    // Jei įvyksta klaida, išvedame klaidos pranešimą ir grąžiname serverio klaidos statusą
+    console.error("Klaida trinant registracijos įrašą:", error.message);
+    res.status(500).json({ error: "Serverio klaida" });
+  }
+});
+
+// Paleidžiame serverį ir stebime, ar jis sėkmingai pasiekia nurodytą portą
 app.listen(PORT, () => {
   console.log(`Serveris veikia portu: ${PORT}`);
 });

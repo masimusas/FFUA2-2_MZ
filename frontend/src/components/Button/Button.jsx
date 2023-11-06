@@ -27,4 +27,4 @@ const Button = ({ type, onClick, children, linkTo }) => {
   );
 };
 
-export default Button; // Eksportuojame sukurtą komponentą
+export default Button;

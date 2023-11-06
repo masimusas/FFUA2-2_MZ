@@ -68,3 +68,7 @@ th {
     color: #fff;
     width: auto;
 }
+
+.delete-item {
+    margin: 0;
+}
