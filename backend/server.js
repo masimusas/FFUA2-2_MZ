@@ -181,6 +181,29 @@ app.get("/procedureslist", async (req, res) => {
   }
 });
 
+app.delete("/delete/:clientId", authenticateJWT, async (req, res) => {
+  const registrationId = req.params.clientId;
+
+  try {
+    // Tikriname, ar įrašas su nurodytu ID egzistuoja
+    const existingClient = await Client.findById(registrationId);
+
+    if (!existingClient) {
+      return res.status(404).json({ error: "Registracijos įrašas nerastas" });
+    }
+
+    // Įrašas egzistuoja, todėl jį ištriname
+    await existingClient.deleteOne();
+
+    res
+      .status(200)
+      .json({ message: "Registracijos įrašas ištrintas sėkmingai" });
+  } catch (error) {
+    console.error("Klaida trinant registracijos įrašą:", error.message);
+    res.status(500).json({ error: "Serverio klaida" });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Serveris veikia portu: ${PORT}`);
 });
