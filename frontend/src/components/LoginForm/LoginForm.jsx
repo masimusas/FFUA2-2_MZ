@@ -3,13 +3,14 @@ import { useNavigate } from "react-router-dom";
 
 // Komponentas, atvaizduojantis prisijungimo formą
 const LoginForm = () => {
+  // Būsenos kintamasis saugantis pranešimą vartotojui
+  const [message, setMessage] = useState(null);
   // useNavigate hook'as leidžia programiškai pereiti į kitą puslapį
   const navigate = useNavigate();
   // Būsenos kintamieji saugantys įvestus el. paštą ir slaptažodį
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  // Būsenos kintamasis klaidos pranešimui
-  const [errorMessage, setErrorMessage] = useState(null);
+
   // Funkcija keisti el. pašto būsenos kintamąjį pagal įvestą reikšmę
   const handleEmailChange = (e) => {
     setEmail(e.target.value);
@@ -34,21 +35,28 @@ const LoginForm = () => {
         body: JSON.stringify({ email, password }),
       });
 
-      // Gaunami duomenys iš serverio atsakymo
-      const data = await response.json();
-      console.log(data);
+      // Gaunami duomenys iš serverio
+      const data = await response.clone().json();
+
       // Jei gaunamas prisijungimo tokenas, jis saugomas localStorage
       if (data.token) {
         localStorage.setItem("token", data.token);
+        setMessage({ type: "success", content: data.message });
+
+        // Prisijungus nukreipia į klientų puslapį
+        navigate("/clients");
+      } else {
+        // Jei klaida, rodomas klaidos pranešimas
+        const errorData = await response.json();
+        setMessage({ type: "error", content: errorData.error });
       }
-      navigate("/clients");
     } catch (error) {
       // Jei įvyko klaida, rodomas bendras klaidos pranešimas
-      setErrorMessage(error);
+      setMessage({ type: "error", content: error.message });
     }
   };
 
-  // JSX, kuris atvaizduoja prisijungimo formą
+  // return, kuris gražina prisijungimo formą
   return (
     <form onSubmit={handleSubmit}>
       <label>
@@ -72,7 +80,10 @@ const LoginForm = () => {
       </label>
       <br />
       <button type="submit">Prisijungti</button>
-      {errorMessage && <div className="error-message">{errorMessage}</div>}
+      {message && (
+        // Atvaizduoja pranešimą, pagal tipą
+        <div className={`message ${message.type}`}>{message.content}</div>
+      )}
     </form>
   );
 };

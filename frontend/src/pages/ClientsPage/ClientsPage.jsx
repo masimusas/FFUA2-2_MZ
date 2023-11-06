@@ -5,16 +5,23 @@ import Clients from "../../components/Clients/Clients";
 import "./ClientsPage.css";
 import Modal from "react-modal";
 
+// Komponentas, atvaizduojantis klientų puslapį su sąrašu ir registracijos forma
 const ClientsPage = () => {
+  // Būsenos kintamasis, nurodantis ar modalas atidarytas ar uždarytas
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // useNavigate hook'as leidžia programiškai pereiti į kitą puslapį
   const navigate = useNavigate();
 
+  // useEffect hook'as vykdomas komponento pradinio užkrovimo metu
   useEffect(() => {
+    // Tikrinama ar vartotojas autentifikuotas
     const token = localStorage.getItem("token");
 
     if (!token) {
+      // Jei vartotojas neautentifikuotas, nukreipiami į prisijungimo puslapį
       navigate("/login");
     } else {
+      // Jei vartotojas autentifikuotas, tikrinama ar galioja jo prisijungimo tokenas
       fetch("http://localhost:5500/verify", {
         method: "POST",
         headers: {
@@ -24,6 +31,7 @@ const ClientsPage = () => {
       })
         .then((response) => {
           if (!response.ok) {
+            // Jei tokenas nebevalidus, vartotojas nukreipiamas į prisijungimo puslapį
             throw new Error("Tokeno patikrinimas nepavyko");
           }
           return response.json();
@@ -34,14 +42,16 @@ const ClientsPage = () => {
     }
   }, [navigate]);
 
+  // Funkcija, kuri atidaro modalą
   const openModal = () => {
     setIsModalOpen(true);
   };
 
+  // Funkcija, kuri uždaro modalą
   const closeModal = () => {
     setIsModalOpen(false);
   };
-
+  // return, kuris grąžina klientų puslapį
   return (
     <div className="container">
       <h1>Salono Klientų Puslapis</h1>

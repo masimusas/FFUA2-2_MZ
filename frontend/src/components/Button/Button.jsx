@@ -9,9 +9,9 @@ const Button = ({ type, onClick, children, linkTo }) => {
     onClick, // Mygtuko paspaudimo funkcija
   };
 
-  // Tikriname mygtuko tipo savybę
+  // Tikriname mygtuko tipą
   if (type === "link") {
-    // Jei mygtukas yra nuoroda, grąžiname a elemento JSX su savybėmis
+    // return, kuris grąžina linką
     return (
       <a href={linkTo} {...buttonProps}>
         {children} {/* Vaikinio elemento turinys (tekstas arba komponentas) */}
@@ -19,7 +19,7 @@ const Button = ({ type, onClick, children, linkTo }) => {
     );
   }
 
-  // Jei mygtukas yra standartinis, grąžiname button elemento JSX su savybėmis
+  // return, kuris grąžina button
   return (
     <button type="button" {...buttonProps}>
       {children} {/* Vaikinio elemento turinys (tekstas arba komponentas) */}
