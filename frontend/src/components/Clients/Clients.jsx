@@ -14,6 +14,7 @@ const ClientTable = () => {
 
   // Efektas, gaunantis klientų duomenis iš serverio
   useEffect(() => {
+    // Gauname klientų duomenis iš serverio
     fetch("http://localhost:5500/clients")
       .then((response) => response.json())
       .then((data) => setClients(data))
@@ -46,14 +47,15 @@ const ClientTable = () => {
         console.error("Nėra autentifikacijos tokeno");
         return;
       }
-
+      // Siunčiame užklausą serveriui dėl kliento ištrynimo
       const response = await fetch(
         `http://localhost:5500/delete/${clientIdToDelete}`,
         {
           method: "DELETE",
           headers: {
             "Content-Type": "application/json",
-            "x-auth-token": token, // Priddame autentifikacijos tokeną į užklausos antraštę
+            // Priddame autentifikacijos tokeną į užklausos antraštę
+            "x-auth-token": token,
           },
         }
       );
@@ -65,6 +67,7 @@ const ClientTable = () => {
         );
         setClients(updatedClients);
       } else {
+        // Jei ištrynimo metu kilo klaida, atvaizduojame klaidos pranešimą
         const errorData = await response.json();
         console.error("Klaida trinant klientą:", errorData.error);
       }
@@ -131,7 +134,7 @@ const ClientTable = () => {
         disabledClassName={"pagination__link--disabled"}
         activeClassName={"pagination__link--active"}
       />
-      {/* ConfirmationModal */}
+      {/* ConfirmationModal komponentas */}
       <ConfirmationModal
         show={showConfirmation}
         onConfirm={handleConfirmDelete}
