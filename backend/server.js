@@ -92,6 +92,7 @@ app.post("/register", async (req, res) => {
 
   try {
     // Tikriname, ar paslauga užimta tuo pačiu metu
+    // $gt (>), $gte (>=), $lt (<), $lte (<=)
     const existingServiceSameTime = await Client.findOne({
       date,
       $or: [
