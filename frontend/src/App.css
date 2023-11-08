@@ -1,0 +1,51 @@
+body {
+    margin: 0;
+}
+
+.background {
+    background-image: url('./assets/background.jpg');
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    /* border-radius: 8px; */
+    /* box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); */
+    /* position: relative; */
+    color: #fff;
+}
+
+form {
+    max-width: 400px;
+    margin: 50px auto;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.form-wrapper {
+    max-width: 400px;
+    margin: 50px auto;
+}
+
+.error-message {
+    color: #e74c3c;
+    margin-top: 10px;
+}
+
+label {
+    color: black;
+    text-align: left;
+}

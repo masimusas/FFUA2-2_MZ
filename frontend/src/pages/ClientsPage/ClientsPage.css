@@ -1,0 +1,50 @@
+.container {
+    max-width: 800px;
+    margin-top: 50px;
+    text-align: center;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.modal-button:hover {
+    background-color: #2980b9;
+}
+
+.modal-content {
+    max-width: 500px;
+    margin: 0px auto;
+}
+
+.modal-close-button {
+    background-color: #e74c3c;
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin: 20px;
+}
+
+.modal-close-button:hover {
+    background-color: #c0392b;
+}
+
+table {
+    color: black;
+}
+
+.modal-title {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    text-align: center;
+}
