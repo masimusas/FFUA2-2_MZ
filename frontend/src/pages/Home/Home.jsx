@@ -13,7 +13,7 @@ export const Home = () => {
 
   // Funkcija, kuri nukreipia į registracijos puslapį
   const handleRegistrationClick = () => {
-    navigate("./registracija");
+    navigate("./registration");
   };
 
   // Funkcija, kuri nukreipia į prisijungimo puslapį
@@ -45,9 +45,7 @@ export const Home = () => {
           </Button>
         </>
       )}
-      {/* Patikrinama ar vartotojas autentifikuotas */}
       {isAuthenticated && (
-        /* Mygtukas, kuris nukreipia į klientų puslapį */
         <Button type="link" onClick={handleClientsClick}>
           Eiti į klientų puslapį
         </Button>
