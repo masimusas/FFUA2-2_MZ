@@ -7,6 +7,9 @@ import Modal from "react-modal";
 
 // Komponentas, atvaizduojantis klientų puslapį su sąrašu ir registracijos forma
 const ClientsPage = () => {
+  useEffect(() => {
+    Modal.setAppElement("#root"); // Pakeiskite "#root" pagal savo pagrindinio elemento id
+  }, []);
   // Būsenos kintamasis, nurodantis ar modalas atidarytas ar uždarytas
   const [isModalOpen, setIsModalOpen] = useState(false);
   // useNavigate hook'as leidžia programiškai pereiti į kitą puslapį
@@ -71,9 +74,13 @@ const ClientsPage = () => {
           },
         }}
       >
-        <button className="modal-close-button" onClick={closeModal}>
-          Uždaryti
-        </button>
+        <div className="modal-title">
+          <button className="modal-close-button" onClick={closeModal}>
+            Uždaryti
+          </button>
+          <h1>Klientų registracijos forma</h1>
+        </div>
+
         <ClienForm />
       </Modal>
     </div>
